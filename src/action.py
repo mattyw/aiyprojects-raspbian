@@ -194,6 +194,19 @@ class RepeatAfterMe(object):
         self.say(to_repeat)
 
 
+class WhenIReady(object):
+
+    """Repeats the user's command."""
+
+    def __init__(self, say, keyword):
+        self.say = say
+        self.keyword = keyword
+
+    def run(self, voice_command):
+        words = "When I'm ready"
+        self.say(words)
+
+
 # =========================================
 # Makers! Implement your own actions here.
 # =========================================
@@ -215,6 +228,7 @@ def make_actor(say):
 
     actor.add_keyword(_('repeat after me'),
                       RepeatAfterMe(say, _('repeat after me')))
+    actor.add_keyword(_('when are you going'), WhenIReady(say, ""))
 
     # =========================================
     # Makers! Add your own voice commands here.
