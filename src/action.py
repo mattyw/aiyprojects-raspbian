@@ -206,6 +206,23 @@ class WhenIReady(object):
         words = "When I'm ready"
         self.say(words)
 
+class Notepad(object):
+    """Writes notes"""
+    filename = "/home/pi/Desktop/notes.txt"
+
+    def __init__(self, say, keyword):
+        self.say = say
+        self.keyword = keyword
+
+    def run(self, voice_command):
+        # The command still has the 'repeat after me' keyword, so we need to
+        # remove it before saying whatever is left.
+        note = voice_command.replace(self.keyword, '', 1)
+        self.say(note)
+        with open(self.filename, 'a') as file:
+            file.write(note + '\n')
+        self.say("Noted")
+
 
 # =========================================
 # Makers! Implement your own actions here.
@@ -229,6 +246,7 @@ def make_actor(say):
     actor.add_keyword(_('repeat after me'),
                       RepeatAfterMe(say, _('repeat after me')))
     actor.add_keyword(_('when are you going'), WhenIReady(say, ""))
+    actor.add_keyword(_('make a note'), Notepad(say, "foo"))
 
     # =========================================
     # Makers! Add your own voice commands here.
